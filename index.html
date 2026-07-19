@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Your Studio Name</title>
+<title>Matcha Studio</title>
 <meta name="description" content="We build Roblox experiences players love." />
 <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -12,8 +12,8 @@
 <nav class="navbar">
   <div class="container">
     <a href="#home" class="brand">
-      <span class="brand__mark"></span>
-      Your Studio Name
+      <img src="images/logo.png" class="brand__mark" alt="Matcha Studio logo">
+      Matcha Studio
     </a>
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
@@ -126,28 +126,32 @@
       <h2>Tell us what you are building.</h2>
       <p>Send the project link, what you need help with, and your timeline.</p>
     </div>
-    <form class="contact-form" onsubmit="alert('Hook this up to Formspree, Getform, or an email service — see the README.'); return false;">
+    <!--
+      This form sends to Formspree, which forwards submissions straight to
+      BrickStudioRev@outlook.com.
+    -->
+    <form class="contact-form" action="https://formspree.io/f/mdaqgpbl" method="POST">
       <div class="form-row">
         <div>
           <label for="name">Name</label>
-          <input id="name" type="text" required />
+          <input id="name" name="name" type="text" required />
         </div>
         <div>
           <label for="email">Email</label>
-          <input id="email" type="email" required />
+          <input id="email" name="email" type="email" required />
         </div>
       </div>
       <div>
         <label for="company">Company / Studio</label>
-        <input id="company" type="text" />
+        <input id="company" name="company" type="text" />
       </div>
       <div>
         <label for="link">Project / Game Link</label>
-        <input id="link" type="url" />
+        <input id="link" name="project_link" type="url" />
       </div>
       <div>
         <label for="details">Request details</label>
-        <textarea id="details" placeholder="Tell us about the project, your timeline, and what kind of help you need."></textarea>
+        <textarea id="details" name="message" placeholder="Tell us about the project, your timeline, and what kind of help you need."></textarea>
       </div>
       <button type="submit" class="btn btn--primary">Send request</button>
     </form>
@@ -157,8 +161,8 @@
 <footer>
   <div class="container">
     <a href="#home" class="brand">
-      <span class="brand__mark"></span>
-      Your Studio Name
+      <img src="images/logo.png" class="brand__mark" alt="Matcha Studio logo">
+      Matcha Studio
     </a>
     <ul class="footer-links">
       <li><a href="experiences.html">Our Games</a></li>
@@ -166,7 +170,7 @@
       <li><a href="#careers">Careers</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <p class="footer-note">© 2026 Your Studio Name. All rights reserved.</p>
+    <p class="footer-note">© 2026 Matcha Studio. All rights reserved.</p>
   </div>
 </footer>
 

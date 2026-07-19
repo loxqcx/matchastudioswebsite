@@ -1,4 +1,4 @@
-# Your Studio Name — website
+# Matcha Studio — website
 
 A game-studio website (like the Atlantic Interactive site) with **real, live
 stats pulled from Roblox** — active players and total visits are never typed
@@ -36,7 +36,7 @@ Open `js/games-config.js`. Each game looks like this:
 - **image**: drop a thumbnail (PNG/JPG) into the `images` folder and point to it here.
 - Copy/paste a whole `{ ... }` block to add a game, or delete one to remove it.
 
-Also rename "Your Studio Name" in `index.html`, `experiences.html`, and the
+Also rename "Matcha Studio" in `index.html`, `experiences.html`, and the
 `<title>` tags to your actual studio name.
 
 ## Step 2: How the "live" stats actually work
@@ -88,6 +88,26 @@ Edit `js/games-config.js`, save, and either:
 - if you uploaded manually, go back to your GitHub repo, edit the file directly
   in the browser (pencil icon), and commit — Vercel will pick it up.
 
+## Updating your site later (no new repo needed)
+
+You never need to create a new repository again. To change anything —
+games, logo, colors, wording — just replace the file inside your
+**existing** GitHub repo, and Vercel redeploys automatically:
+
+1. Go to your repo on GitHub (e.g. `github.com/YOUR-USERNAME/matchastudioswebsite`).
+2. Click into the file you want to change (e.g. `js/games-config.js`).
+3. Click the **pencil icon** (top right of the file view) to edit it in the browser.
+4. Select all the text (Ctrl/Cmd+A) and delete it, then paste in the new version.
+5. Scroll down, type a short commit message, click **Commit changes**.
+6. That's it — no re-importing, no new project. Vercel watches this repo
+   and automatically redeploys within about a minute. Refresh your site
+   after a minute to see the change live.
+
+For files GitHub can't edit as text (like an image), instead: open the
+folder it belongs in (e.g. `images`), click **Add file → Upload files**,
+drag in the new image **with the exact same filename** as the one you're
+replacing, and commit — GitHub will ask to confirm you're replacing it.
+
 ## Alternative: Netlify (also free)
 
 Netlify's free tier also supports serverless functions, but the folder needs
@@ -102,12 +122,24 @@ hosts static files, no server code). If you use GitHub Pages, the site will
 work but the stats will show "—" instead of real numbers, since there's
 nowhere for the API calls to run. Vercel is the better choice for this project.
 
-## Contact form note
+## Contact form setup (sends to BrickStudioRev@outlook.com)
 
-The contact form on the home page currently just shows an alert when
-submitted — it doesn't send an email yet. Free ways to make it actually work:
-- **Formspree** (formspree.io) — free tier, just point the form's `action` at
-  the endpoint they give you
-- **Getform** (getform.io) — similar, also has a free tier
+The form in `index.html` is already wired up to use **Formspree** (free,
+no code) — you just need to create the form on their end and swap one ID:
 
-Ask me and I can wire either of these in for you.
+1. Go to **formspree.io** and sign up (free plan is fine — 50 submissions/month).
+2. Click **New Form**, name it anything (e.g. "Matcha Studio contact"), and
+   set the recipient email to `BrickStudioRev@outlook.com`.
+3. Formspree gives you a form endpoint that looks like:
+   `https://formspree.io/f/abcd1234`
+4. Open `index.html`, find this line near the contact section:
+   ```html
+   <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+   ```
+   Replace `YOUR_FORM_ID` with the ID Formspree gave you (just that part,
+   keep the rest of the URL the same).
+5. Commit that change on GitHub (same "edit file" flow as updating games).
+6. The first time someone submits the form, Formspree sends **you** a
+   confirmation email to verify BrickStudioRev@outlook.com — click that
+   link once, and after that all future submissions land straight in
+   that inbox automatically.

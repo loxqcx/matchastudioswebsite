@@ -10,9 +10,10 @@
 
     name        -> The display name of the game
     description -> A short one/two sentence description
-    image       -> Path to a thumbnail image (put the image file
-                   inside the /images folder and reference it
-                   here, e.g. "images/my-game.png")
+    image       -> A thumbnail image. You can either:
+                     a) paste a direct Roblox thumbnail URL, or
+                     b) put an image file inside the /images
+                        folder and write "images/my-game.png"
     placeId     -> The number in your Roblox game's URL.
                    Example: https://www.roblox.com/games/119068914321553/My-Game
                                                           ^^^^^^^^^^^^^^
@@ -25,34 +26,29 @@
   type numbers in by hand, and they can't go out of date.
 
   To ADD a game: copy one of the blocks below (from the { to
-  the matching },) and fill in your own details.
+  the matching },) and paste it inside the [ ] below, then
+  fill in your own details. Don't forget the comma between
+  game blocks.
 
-  To REMOVE a game: delete its whole block.
+  To REMOVE a game: delete its whole block (including the
+  comma after it).
 */
 
 const GAMES = [
   {
-    name: "Traitor VS Sheriff DUELS",
-    description: "A competitive duel experience built around fast rounds and reasons to come back.",
-    image: "images/game-placeholder-1.png",
-    placeId: 119068914321553,
-    link: "https://www.roblox.com/games/119068914321553/Traitor-VS-Sheriff-DUELS",
-    ctaText: "Enter the Duel"
+    name: "+1 Speed Bee Escape",
+    description: "A fast-paced escape experience built for quick, repeatable runs.",
+    image: "https://tr.rbxcdn.com/180DAY-96af55a25ff1dcf0a5f0334b75a38956/768/432/Image/Webp/noFilter",
+    placeId: 105946076556169,
+    link: "https://www.roblox.com/games/105946076556169/1-Speed-Bee-Escape",
+    ctaText: "Play Now"
   },
   {
-    name: "Catch A Fade 2",
-    description: "A live experience shaped around memorable sessions and competitive energy.",
-    image: "images/game-placeholder-2.png",
-    placeId: 103820982596314,
-    link: "https://www.roblox.com/games/103820982596314/Catch-A-Fade-2-SHOES",
-    ctaText: "Jump Into the Fight"
-  },
-  {
-    name: "Cut Grass for Anime Characters",
-    description: "A relaxed, repeat-play experience with a steady stream of updates.",
-    image: "images/game-placeholder-3.png",
-    placeId: 137422980844414,
-    link: "https://www.roblox.com/games/137422980844414/Cut-Grass-for-Anime-Characters",
-    ctaText: "Start Cutting"
+    name: "Roll Your NeeDoh",
+    description: "A relaxed rolling experience with satisfying physics and a steady stream of updates.",
+    image: "https://tr.rbxcdn.com/180DAY-ba64ba2b80de300afccbc3b0ac9cbf2f/768/432/Image/Webp/noFilter",
+    placeId: 73669693611732,
+    link: "https://www.roblox.com/games/73669693611732/Roll-Your-NeeDoh",
+    ctaText: "Start Rolling"
   }
 ];
