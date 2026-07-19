@@ -28,26 +28,57 @@
 </nav>
 
 <header class="hero" id="home">
-  <div class="container">
-    <span class="eyebrow">Live game analytics</span>
-    <h1>Powering Great Experiences</h1>
-    <p class="lead">We build games players love and keep them running with production, live-ops, analytics, and growth strategy.</p>
-    <div class="hero-ctas">
-      <a href="/experiences" class="btn btn--primary">Explore Our Games</a>
-      <a href="#contact" class="btn btn--secondary">Start a partnership</a>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow"><span class="pulse-dot"></span> Live game analytics</span>
+      <h1>Powering Great Experiences</h1>
+      <p class="lead">We build games players love and keep them running with production, live-ops, analytics, and growth strategy.</p>
+      <div class="hero-ctas">
+        <a href="/experiences" class="btn btn--primary">Explore Our Games ↗</a>
+        <a href="#contact" class="btn btn--secondary">Start a partnership</a>
+      </div>
+      <div class="mini-stack">
+        <span class="mini-avatar">GP</span>
+        <span class="mini-avatar">LO</span>
+        <span class="mini-avatar">+</span>
+        <p>Production, growth, and live operations under one roof.</p>
+      </div>
     </div>
 
-    <div class="stats-bar">
-      <span class="stats-bar__label">Live, pulled straight from Roblox</span>
-      <div class="stat">
+    <div class="live-card">
+      <div class="live-card__top">
+        <span>Live, pulled straight from Roblox</span>
+        <span class="live-badge"><span class="pulse-dot"></span> Live</span>
+      </div>
+      <div class="live-card__value" data-stat="players">—</div>
+      <p class="live-card__label">Active players across all experiences</p>
+      <svg class="live-card__chart" viewBox="0 0 300 90" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" style="stop-color: var(--accent); stop-opacity: 0.35" />
+            <stop offset="100%" style="stop-color: var(--accent); stop-opacity: 0" />
+          </linearGradient>
+        </defs>
+        <g data-sparkline></g>
+      </svg>
+      <div class="live-card__foot">
+        <span data-updated-ago>Updated moments ago</span>
+        <span data-updating-in>Refreshing in 60s</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat-box">
         <span class="stat-value" data-stat="players">—</span>
         <span class="stat-label">Active players</span>
       </div>
-      <div class="stat">
+      <div class="stat-box">
         <span class="stat-value" data-stat="visits">—</span>
         <span class="stat-label">Total visits</span>
       </div>
-      <div class="stat">
+      <div class="stat-box">
         <span class="stat-value" data-stat="projects">—</span>
         <span class="stat-label">Live games</span>
       </div>
@@ -98,24 +129,28 @@
 </section>
 
 <section id="careers">
-  <div class="container">
-    <div class="section-head">
+  <div class="container careers-grid">
+    <div class="careers-copy">
       <span class="eyebrow">Careers</span>
       <h2>Make work players remember.</h2>
-      <p>Join a team where good ideas can come from anywhere and your work reaches real players.</p>
+      <p>Join a team where good ideas can come from anywhere and your work reaches real players. We're hiring across every discipline below.</p>
+      <p class="careers-note">Interested in one of these roles? Head into our Discord and apply there — that's where we post details and next steps.</p>
+      <a href="https://discord.gg/TQrd3wcyf7" target="_blank" rel="noopener" class="btn btn--secondary">Apply on Discord ↗</a>
     </div>
     <div class="roles-list">
-      <span class="role-pill">Concept Artist</span>
-      <span class="role-pill">Animator</span>
-      <span class="role-pill">Programmer</span>
-      <span class="role-pill">Game Producer</span>
-      <span class="role-pill">Data Analyst</span>
-      <span class="role-pill">Game Designer</span>
-      <span class="role-pill">Builder</span>
-      <span class="role-pill">Quality Assurance Tester</span>
-    </div>
-    <div class="section-cta">
-      <a href="#contact" class="btn btn--secondary">Apply through our contact form</a>
+      <div class="role-row"><span>Concept Artist</span><span class="role-tag">Creative</span></div>
+      <div class="role-row"><span>Animator</span><span class="role-tag">Creative</span></div>
+      <div class="role-row"><span>VFX Artist</span><span class="role-tag">Creative</span></div>
+      <div class="role-row"><span>Sound Designer</span><span class="role-tag">Creative</span></div>
+      <div class="role-row"><span>Programmer / Coder</span><span class="role-tag">Engineering</span></div>
+      <div class="role-row"><span>Builder</span><span class="role-tag">Development</span></div>
+      <div class="role-row"><span>Game Designer</span><span class="role-tag">Design</span></div>
+      <div class="role-row"><span>UI / UX Designer</span><span class="role-tag">Design</span></div>
+      <div class="role-row"><span>Game Producer</span><span class="role-tag">Production</span></div>
+      <div class="role-row"><span>Data Analyst</span><span class="role-tag">Analytics</span></div>
+      <div class="role-row"><span>Marketing / Growth</span><span class="role-tag">Marketing</span></div>
+      <div class="role-row"><span>Community Manager</span><span class="role-tag">Community</span></div>
+      <div class="role-row"><span>Quality Assurance Tester</span><span class="role-tag">QA</span></div>
     </div>
   </div>
 </section>

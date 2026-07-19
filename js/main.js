@@ -3,6 +3,13 @@
 // show up, edit js/games-config.js instead.
 // ============================================================
 
+const REFRESH_SECONDS = 60;
+const SPARKLINE_HISTORY_LIMIT = 20;
+
+let lastUpdatedAt = null;
+let secondsUntilRefresh = REFRESH_SECONDS;
+let playerHistory = [];
+
 function formatNumber(num) {
   if (num === null || num === undefined) return "—";
   if (num >= 1_000_000_000) return (num / 1_000_000_000).toFixed(1).replace(/\.0$/, "") + "B+";
@@ -12,9 +19,6 @@ function formatNumber(num) {
 }
 
 function animateCount(el, target) {
-  const isPlain = /^\d+$/.test(target.replace(/[^0-9]/g, "")) === false;
-  // If it's a formatted string like "72.8M+", just fade it in —
-  // animating a count-up through unit changes (K -> M) gets messy.
   el.textContent = "0";
   el.classList.add("stat-fade-in");
   requestAnimationFrame(() => {
@@ -30,13 +34,36 @@ async function fetchStats() {
 }
 
 function renderHeroStats(totals) {
-  const playersEl = document.querySelector("[data-stat='players']");
-  const visitsEl = document.querySelector("[data-stat='visits']");
-  const projectsEl = document.querySelector("[data-stat='projects']");
+  // Multiple elements can share the same data-stat (e.g. "players" shows
+  // in both the big live card and the small stat box below).
+  document.querySelectorAll("[data-stat='players']").forEach((el) => animateCount(el, formatNumber(totals.players)));
+  document.querySelectorAll("[data-stat='visits']").forEach((el) => animateCount(el, formatNumber(totals.visits)));
+  document.querySelectorAll("[data-stat='projects']").forEach((el) => animateCount(el, String(totals.projects)));
+}
 
-  if (playersEl) animateCount(playersEl, formatNumber(totals.players));
-  if (visitsEl) animateCount(visitsEl, formatNumber(totals.visits));
-  if (projectsEl) animateCount(projectsEl, String(totals.projects));
+function renderSparkline(history) {
+  const group = document.querySelector("[data-sparkline]");
+  if (!group || history.length === 0) return;
+
+  const w = 300;
+  const h = 90;
+  const max = Math.max(...history);
+  const min = Math.min(...history);
+  const range = max - min || Math.max(max, 1);
+
+  const points = history.map((value, i) => {
+    const x = history.length === 1 ? w : (i / (history.length - 1)) * w;
+    const y = h - ((value - min) / range) * (h - 14) - 7;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  });
+
+  const linePoints = points.join(" ");
+  const areaPoints = `0,${h} ${linePoints} ${w},${h}`;
+
+  group.innerHTML = `
+    <polygon points="${areaPoints}" fill="url(#sparkFill)"></polygon>
+    <polyline points="${linePoints}" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></polyline>
+  `;
 }
 
 function renderGameCards(statsByPlaceId, limit) {
@@ -67,6 +94,21 @@ function renderGameCards(statsByPlaceId, limit) {
   });
 }
 
+function updateFooterText() {
+  const agoEl = document.querySelector("[data-updated-ago]");
+  const inEl = document.querySelector("[data-updating-in]");
+  if (!agoEl || !inEl) return;
+
+  if (lastUpdatedAt === null) {
+    agoEl.textContent = "Updating…";
+  } else {
+    const secondsAgo = Math.max(0, Math.round((Date.now() - lastUpdatedAt) / 1000));
+    agoEl.textContent = secondsAgo <= 1 ? "Updated just now" : `Updated ${secondsAgo}s ago`;
+  }
+
+  inEl.textContent = `Refreshing in ${secondsUntilRefresh}s`;
+}
+
 async function loadAndRender() {
   const grid = document.querySelector("[data-games-grid]");
   const limit = grid ? Number(grid.dataset.gamesGrid) || null : null;
@@ -76,20 +118,36 @@ async function loadAndRender() {
     const statsByPlaceId = new Map(games.map((g) => [String(g.placeId), g]));
     renderHeroStats(totals);
     renderGameCards(statsByPlaceId, limit);
+
+    playerHistory.push(totals.players);
+    if (playerHistory.length > SPARKLINE_HISTORY_LIMIT) playerHistory.shift();
+    renderSparkline(playerHistory);
+
+    lastUpdatedAt = Date.now();
   } catch (err) {
     console.error("Could not load live stats:", err);
     // Fall back to showing the cards without live numbers so the
     // page still looks complete, e.g. while running locally without
     // a Vercel dev server.
     renderGameCards(new Map(), limit);
+  } finally {
+    secondsUntilRefresh = REFRESH_SECONDS;
+    updateFooterText();
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   loadAndRender();
-  // Refresh every 60 seconds so "live" stats actually stay live
-  // for anyone leaving the tab open.
-  setInterval(loadAndRender, 60_000);
+
+  // Ticks once a second: counts down to the next refresh and keeps
+  // "Updated Ns ago" accurate in between fetches.
+  setInterval(() => {
+    secondsUntilRefresh = Math.max(0, secondsUntilRefresh - 1);
+    updateFooterText();
+    if (secondsUntilRefresh === 0) {
+      loadAndRender();
+    }
+  }, 1000);
 
   // Mobile nav toggle
   const navToggle = document.querySelector(".nav-toggle");
