@@ -1,11 +1,5 @@
 # Matcha Studio — website
 
-A game-studio website (like the Atlantic Interactive site) with **real, live
-stats pulled from Roblox** — active players and total visits are never typed
-in by hand, they're fetched automatically.
-
-## What's in here
-
 ```
 index.html          → Home page
 experiences.html     → Full "Our Games" page
