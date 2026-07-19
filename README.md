@@ -108,6 +108,15 @@ folder it belongs in (e.g. `images`), click **Add file → Upload files**,
 drag in the new image **with the exact same filename** as the one you're
 replacing, and commit — GitHub will ask to confirm you're replacing it.
 
+## Clean URLs (no .html in the address bar)
+
+`vercel.json` in this project tells Vercel to serve `experiences.html` at
+`/experiences` and `index.html` at `/` — so links and the address bar never
+show `.html`. This only takes effect once deployed on Vercel (it won't do
+anything if you just open the files locally). Nothing else to configure —
+just make sure `vercel.json` is uploaded to the repo root alongside
+`index.html`.
+
 ## Alternative: Netlify (also free)
 
 Netlify's free tier also supports serverless functions, but the folder needs
