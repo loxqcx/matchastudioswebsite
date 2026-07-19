@@ -18,12 +18,22 @@ function formatNumber(num) {
   return String(num);
 }
 
-function animateCount(el, target) {
-  el.textContent = "0";
-  el.classList.add("stat-fade-in");
-  requestAnimationFrame(() => {
-    el.textContent = target;
-  });
+let displayedValues = { players: 0, visits: 0, projects: 0 };
+
+function animateValue(el, from, to, formatFn, duration = 1400) {
+  const startTime = performance.now();
+  function tick(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const value = from + (to - from) * eased;
+    el.textContent = formatFn(value);
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      el.textContent = formatFn(to);
+    }
+  }
+  requestAnimationFrame(tick);
 }
 
 async function fetchStats() {
@@ -36,9 +46,17 @@ async function fetchStats() {
 function renderHeroStats(totals) {
   // Multiple elements can share the same data-stat (e.g. "players" shows
   // in both the big live card and the small stat box below).
-  document.querySelectorAll("[data-stat='players']").forEach((el) => animateCount(el, formatNumber(totals.players)));
-  document.querySelectorAll("[data-stat='visits']").forEach((el) => animateCount(el, formatNumber(totals.visits)));
-  document.querySelectorAll("[data-stat='projects']").forEach((el) => animateCount(el, String(totals.projects)));
+  document.querySelectorAll("[data-stat='players']").forEach((el) =>
+    animateValue(el, displayedValues.players, totals.players, (v) => formatNumber(Math.round(v)))
+  );
+  document.querySelectorAll("[data-stat='visits']").forEach((el) =>
+    animateValue(el, displayedValues.visits, totals.visits, (v) => formatNumber(Math.round(v)))
+  );
+  document.querySelectorAll("[data-stat='projects']").forEach((el) =>
+    animateValue(el, displayedValues.projects, totals.projects, (v) => String(Math.round(v)))
+  );
+
+  displayedValues = { players: totals.players, visits: totals.visits, projects: totals.projects };
 }
 
 function renderSparkline(history) {
@@ -109,6 +127,13 @@ function updateFooterText() {
   inEl.textContent = `Refreshing in ${secondsUntilRefresh}s`;
 }
 
+function hidePageLoader() {
+  const loader = document.getElementById("page-loader");
+  if (!loader) return;
+  loader.classList.add("page-loader--hidden");
+  setTimeout(() => loader.remove(), 600);
+}
+
 async function loadAndRender() {
   const grid = document.querySelector("[data-games-grid]");
   const limit = grid ? Number(grid.dataset.gamesGrid) || null : null;
@@ -136,8 +161,12 @@ async function loadAndRender() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadAndRender();
+document.addEventListener("DOMContentLoaded", async () => {
+  const loaderStartedAt = Date.now();
+  await loadAndRender();
+  const minDisplayMs = 500;
+  const remaining = Math.max(0, minDisplayMs - (Date.now() - loaderStartedAt));
+  setTimeout(hidePageLoader, remaining);
 
   // Ticks once a second: counts down to the next refresh and keeps
   // "Updated Ns ago" accurate in between fetches.
