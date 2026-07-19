@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your Studio Name</title>
+<meta name="description" content="We build Roblox experiences players love." />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="#home" class="brand">
+      <span class="brand__mark"></span>
+      Your Studio Name
+    </a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="experiences.html">Our Games</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#careers">Careers</a></li>
+      <li><a href="#contact" class="btn btn--primary">Get in touch</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+  </div>
+</nav>
+
+<header class="hero" id="home">
+  <div class="container">
+    <span class="eyebrow">Live game analytics</span>
+    <h1>Powering Great Experiences</h1>
+    <p class="lead">We build games players love and keep them running with production, live-ops, analytics, and growth strategy.</p>
+    <div class="hero-ctas">
+      <a href="experiences.html" class="btn btn--primary">Explore Our Games</a>
+      <a href="#contact" class="btn btn--secondary">Start a partnership</a>
+    </div>
+
+    <div class="stats-bar">
+      <span class="stats-bar__label">Live, pulled straight from Roblox</span>
+      <div class="stat">
+        <span class="stat-value" data-stat="players">—</span>
+        <span class="stat-label">Active players</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" data-stat="visits">—</span>
+        <span class="stat-label">Total visits</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" data-stat="projects">—</span>
+        <span class="stat-label">Live games</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="experiences-preview">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Experiences</span>
+      <h2>Roblox experiences, built for repeat play.</h2>
+      <p>We partner across production, systems, QA, community moments, and the operating rhythm that keeps a game moving.</p>
+    </div>
+    <div class="games-grid" data-games-grid="3"></div>
+    <div class="section-cta">
+      <a href="experiences.html" class="btn btn--secondary">View all games →</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">About us</span>
+      <h2>A production partner for ambitious Roblox teams.</h2>
+      <p>From first prototype to millions of sessions, we help teams make games worth returning to.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3>Game Production</h3>
+        <p>Turn ambitious ideas into shippable Roblox experiences with clear milestones and strong creative direction.</p>
+      </div>
+      <div class="info-card">
+        <h3>Marketing</h3>
+        <p>Shape launches, campaigns, and audience hooks that help great games find the players they deserve.</p>
+      </div>
+      <div class="info-card">
+        <h3>Live-Ops</h3>
+        <p>Keep worlds fresh with events, updates, and retention loops that give players reasons to return.</p>
+      </div>
+      <div class="info-card">
+        <h3>Analytics</h3>
+        <p>Use live data and performance signals to guide better decisions across development and growth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="careers">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Careers</span>
+      <h2>Make work players remember.</h2>
+      <p>Join a team where good ideas can come from anywhere and your work reaches real players.</p>
+    </div>
+    <div class="roles-list">
+      <span class="role-pill">Concept Artist</span>
+      <span class="role-pill">Animator</span>
+      <span class="role-pill">Programmer</span>
+      <span class="role-pill">Game Producer</span>
+      <span class="role-pill">Data Analyst</span>
+      <span class="role-pill">Game Designer</span>
+      <span class="role-pill">Builder</span>
+      <span class="role-pill">Quality Assurance Tester</span>
+    </div>
+    <div class="section-cta">
+      <a href="#contact" class="btn btn--secondary">Apply through our contact form</a>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Contact</span>
+      <h2>Tell us what you are building.</h2>
+      <p>Send the project link, what you need help with, and your timeline.</p>
+    </div>
+    <form class="contact-form" onsubmit="alert('Hook this up to Formspree, Getform, or an email service — see the README.'); return false;">
+      <div class="form-row">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" type="text" required />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" type="email" required />
+        </div>
+      </div>
+      <div>
+        <label for="company">Company / Studio</label>
+        <input id="company" type="text" />
+      </div>
+      <div>
+        <label for="link">Project / Game Link</label>
+        <input id="link" type="url" />
+      </div>
+      <div>
+        <label for="details">Request details</label>
+        <textarea id="details" placeholder="Tell us about the project, your timeline, and what kind of help you need."></textarea>
+      </div>
+      <button type="submit" class="btn btn--primary">Send request</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <a href="#home" class="brand">
+      <span class="brand__mark"></span>
+      Your Studio Name
+    </a>
+    <ul class="footer-links">
+      <li><a href="experiences.html">Our Games</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#careers">Careers</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <p class="footer-note">© 2026 Your Studio Name. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="js/games-config.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
