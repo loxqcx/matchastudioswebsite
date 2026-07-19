@@ -287,7 +287,7 @@ section { padding: 88px 0; }
 }
 
 .game-card__image {
-  height: 170px;
+  aspect-ratio: 16 / 9;
   background-size: cover;
   background-position: center;
   background-color: #101d33;
