@@ -161,6 +161,62 @@ async function loadAndRender() {
   }
 }
 
+function setupContactForm() {
+  const form = document.getElementById("contact-form");
+  const statusEl = document.querySelector("[data-form-status]");
+  if (!form) return;
+
+  const submitBtn = form.querySelector("button[type='submit']");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (statusEl) {
+      statusEl.textContent = "";
+      statusEl.className = "form-status";
+    }
+    const originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending…";
+
+    const payload = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      company: form.company.value.trim(),
+      projectLink: form.project_link.value.trim(),
+      message: form.message.value.trim(),
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Request failed");
+      }
+
+      form.reset();
+      if (statusEl) {
+        statusEl.textContent = "Request sent";
+        statusEl.classList.add("form-status--success");
+      }
+    } catch (err) {
+      console.error("Contact form error:", err);
+      if (statusEl) {
+        statusEl.textContent = "Something went wrong — please try again in a moment.";
+        statusEl.classList.add("form-status--error");
+      }
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   const loaderStartedAt = Date.now();
   await loadAndRender();
@@ -186,4 +242,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       navLinks.classList.toggle("nav-links--open");
     });
   }
+
+  setupContactForm();
 });

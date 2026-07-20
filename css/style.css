@@ -552,6 +552,15 @@ input:focus, select:focus, textarea:focus {
 
 textarea { resize: vertical; min-height: 110px; }
 
+.form-status {
+  margin: 0;
+  font-size: 0.9rem;
+  min-height: 1.2em;
+}
+
+.form-status--success { color: var(--accent); font-weight: 600; }
+.form-status--error { color: #e07a7a; }
+
 /* ---------- Footer ---------- */
 
 footer {

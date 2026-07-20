@@ -1,5 +1,11 @@
 # Matcha Studio — website
 
+A game-studio website (like the Atlantic Interactive site) with **real, live
+stats pulled from Roblox** — active players and total visits are never typed
+in by hand, they're fetched automatically.
+
+## What's in here
+
 ```
 index.html          → Home page
 experiences.html     → Full "Our Games" page
@@ -125,24 +131,26 @@ hosts static files, no server code). If you use GitHub Pages, the site will
 work but the stats will show "—" instead of real numbers, since there's
 nowhere for the API calls to run. Vercel is the better choice for this project.
 
-## Contact form setup (sends to BrickStudioRev@outlook.com)
+## Contact form setup (sends to your Discord server)
 
-The form in `index.html` is already wired up to use **Formspree** (free,
-no code) — you just need to create the form on their end and swap one ID:
+The form on the home page posts to `/api/contact`, which forwards it to a
+Discord webhook — pinging two specific people and leaving a note to reply
+by email. **The webhook URL is not stored in this code**, since this repo
+is public and anyone could see and abuse it. Instead, it lives in a
+Vercel Environment Variable:
 
-1. Go to **formspree.io** and sign up (free plan is fine — 50 submissions/month).
-2. Click **New Form**, name it anything (e.g. "Matcha Studio contact"), and
-   set the recipient email to `BrickStudioRev@outlook.com`.
-3. Formspree gives you a form endpoint that looks like:
-   `https://formspree.io/f/abcd1234`
-4. Open `index.html`, find this line near the contact section:
-   ```html
-   <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-   ```
-   Replace `YOUR_FORM_ID` with the ID Formspree gave you (just that part,
-   keep the rest of the URL the same).
-5. Commit that change on GitHub (same "edit file" flow as updating games).
-6. The first time someone submits the form, Formspree sends **you** a
-   confirmation email to verify BrickStudioRev@outlook.com — click that
-   link once, and after that all future submissions land straight in
-   that inbox automatically.
+1. Go to your project on **vercel.com** → click into it → **Settings** → **Environment Variables**.
+2. Add a new variable:
+   - **Key:** `DISCORD_WEBHOOK_URL`
+   - **Value:** your actual Discord webhook URL (starts with `https://discord.com/api/webhooks/...`)
+   - **Environment:** select all (Production, Preview, Development)
+3. Click **Save**.
+4. Go to the **Deployments** tab and redeploy the latest deployment (click the "..." menu on it → **Redeploy**) so the new variable takes effect — environment variables only apply to deployments made *after* you add them.
+
+To change who gets pinged, open `api/contact.js` and edit the two IDs in
+the `PINGED_USER_IDS` list near the top of the file.
+
+If you ever want to rotate the webhook (e.g. it leaked or you want a new
+channel), just create a new webhook in Discord's channel settings and
+update the Environment Variable's value the same way — no code changes
+needed.

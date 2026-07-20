@@ -49,6 +49,6 @@ const GAMES = [
     image: "https://tr.rbxcdn.com/180DAY-ba64ba2b80de300afccbc3b0ac9cbf2f/768/432/Image/Webp/noFilter",
     placeId: 73669693611732,
     link: "https://www.roblox.com/games/73669693611732/Roll-Your-NeeDoh",
-    ctaText: "Play Now"
+    ctaText: "Start Rolling"
   }
 ];

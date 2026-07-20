@@ -52,7 +52,7 @@
 
     <div class="live-card">
       <div class="live-card__top">
-        <span>Live stats of our total ccu </span>
+        <span>Live, pulled straight from Roblox</span>
         <span class="live-badge"><span class="pulse-dot"></span> Live</span>
       </div>
       <div class="live-card__value" data-stat="players">—</div>
@@ -168,10 +168,13 @@
       <p>Send the project link, what you need help with, and your timeline.</p>
     </div>
     <!--
-      This form sends to Formspree, which forwards submissions straight to
-      BrickStudioRev@outlook.com.
+      This form is submitted with JavaScript (see js/main.js) to
+      /api/contact, which forwards it to a Discord webhook. The webhook
+      URL itself lives in a Vercel Environment Variable, not in this
+      file, since this repo is public. See README.md → "Contact form
+      setup" for the one-time step to add it.
     -->
-    <form class="contact-form" action="https://formspree.io/f/mdaqgpbl" method="POST">
+    <form class="contact-form" id="contact-form">
       <div class="form-row">
         <div>
           <label for="name">Name</label>
@@ -195,6 +198,7 @@
         <textarea id="details" name="message" placeholder="Tell us about the project, your timeline, and what kind of help you need."></textarea>
       </div>
       <button type="submit" class="btn btn--primary">Send request</button>
+      <p class="form-status" data-form-status aria-live="polite"></p>
     </form>
   </div>
 </section>
