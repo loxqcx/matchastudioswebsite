@@ -67,7 +67,6 @@ a { color: inherit; }
   width: 32px;
   height: 32px;
   border-radius: 9px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-dim));
   object-fit: cover;
 }
 
