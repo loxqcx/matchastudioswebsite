@@ -49,7 +49,7 @@ export default async function handler(req, res) {
             { name: "Project / Game Link", value: projectLink ? clip(projectLink) : "—", inline: false },
             { name: "Message", value: message ? clip(message, 1500) : "—", inline: false },
           ],
-          footer: { text: "Please reach back to the user via email" },
+          footer: { text: "Please reach back to the user via email (using the brickstudios email), and react to this message with a ✅ if you have responded to the user." },
           timestamp: new Date().toISOString(),
         },
       ],
