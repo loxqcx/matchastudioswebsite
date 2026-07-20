@@ -36,8 +36,8 @@
 
 const GAMES = [
   {
-    name: "+1 Speed Bee Escape",
-    description: "A fast-paced escape experience built for quick, repeatable runs.",
+    name: "🐝 +1 Speed Bee Escape",
+    description: "Gain Speed to beat the obby.. but as a bee.",
     image: "https://tr.rbxcdn.com/180DAY-96af55a25ff1dcf0a5f0334b75a38956/768/432/Image/Webp/noFilter",
     placeId: 105946076556169,
     link: "https://www.roblox.com/games/105946076556169/1-Speed-Bee-Escape",
