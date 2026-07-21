@@ -18,7 +18,7 @@ function formatNumber(num) {
   return String(num);
 }
 
-let displayedValues = { players: 0, visits: 0, projects: 0 };
+let displayedValues = { players: 0, visits: 0, projects: 0, peak: 0 };
 
 function animateValue(el, from, to, formatFn, duration = 1400) {
   const startTime = performance.now();
@@ -55,8 +55,11 @@ function renderHeroStats(totals) {
   document.querySelectorAll("[data-stat='projects']").forEach((el) =>
     animateValue(el, displayedValues.projects, totals.projects, (v) => String(Math.round(v)))
   );
+  document.querySelectorAll("[data-stat='peak']").forEach((el) =>
+    animateValue(el, displayedValues.peak, totals.peak, (v) => formatNumber(Math.round(v)))
+  );
 
-  displayedValues = { players: totals.players, visits: totals.visits, projects: totals.projects };
+  displayedValues = { players: totals.players, visits: totals.visits, projects: totals.projects, peak: totals.peak };
 }
 
 function renderSparkline(history) {
