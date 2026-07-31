@@ -50,5 +50,13 @@ const GAMES = [
     placeId: 73669693611732,
     link: "https://www.roblox.com/games/73669693611732/Roll-Your-NeeDoh",
     ctaText: "Start Rolling"
+  },
+   {
+    name: "+1 Youtube Streams Per Click",
+    description: "Battle against streamers",
+    image: "https://tr.rbxcdn.com/180DAY-e4889ac2b7fbb7b7b621a99a870bffa1/768/432/Image/Webp/noFilter",
+    placeId: 133563553965706,
+    link: "https://www.roblox.com/games/133563553965706/1-Youtube-Streams-Per-Click",
+    ctaText: "Start Battling"
   }
 ];
