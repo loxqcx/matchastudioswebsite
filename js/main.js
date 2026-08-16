@@ -20,6 +20,37 @@ function formatNumber(num) {
 
 let displayedValues = { players: 0, visits: 0, projects: 0, peak: 0 };
 
+function renderHeroMosaic() {
+  const mosaic = document.querySelector("[data-hero-mosaic]");
+  if (!mosaic || !GAMES.length) return;
+
+  const rowCount = 5;
+  const tilesPerSet = Math.max(GAMES.length, 8);
+  const fragment = document.createDocumentFragment();
+
+  for (let rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
+    const row = document.createElement("div");
+    row.className = "hero-mosaic__row";
+    row.style.setProperty("--mosaic-duration", `${54 + rowIndex * 7}s`);
+
+    // Two identical sets make the animation loop without a visible jump.
+    for (let copy = 0; copy < 2; copy += 1) {
+      for (let tileIndex = 0; tileIndex < tilesPerSet; tileIndex += 1) {
+        const gameIndex = (tileIndex + rowIndex * 2) % GAMES.length;
+        const game = GAMES[gameIndex];
+        const tile = document.createElement("span");
+        tile.className = "hero-mosaic__tile";
+        tile.style.backgroundImage = `url("${game.image}")`;
+        row.appendChild(tile);
+      }
+    }
+
+    fragment.appendChild(row);
+  }
+
+  mosaic.replaceChildren(fragment);
+}
+
 function animateValue(el, from, to, formatFn, duration = 1400) {
   const startTime = performance.now();
   function tick(now) {
@@ -94,13 +125,15 @@ function renderGameCards(statsByPlaceId, limit) {
   const games = limit ? GAMES.slice(0, limit) : GAMES;
   grid.innerHTML = "";
 
-  games.forEach((game) => {
+  games.forEach((game, index) => {
     const stats = statsByPlaceId.get(String(game.placeId)) || { playing: null, visits: null };
 
     const card = document.createElement("article");
     card.className = "game-card";
     card.innerHTML = `
-      <div class="game-card__image" style="background-image: url('${game.image}')"></div>
+      <div class="game-card__image" style="background-image: url('${game.image}')">
+        <div class="game-card__image-overlay"><span>Live experience</span><span>${String(index + 1).padStart(2, "0")} ↗</span></div>
+      </div>
       <div class="game-card__body">
         <h3>${game.name}</h3>
         <p>${game.description}</p>
@@ -220,8 +253,26 @@ function setupContactForm() {
   });
 }
 
+function setupScrollReveal() {
+  const items = document.querySelectorAll("section, .stats-row, .live-card");
+  if (!items.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  items.forEach((item) => item.classList.add("reveal"));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("reveal--visible");
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.08 });
+
+  items.forEach((item) => observer.observe(item));
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   const loaderStartedAt = Date.now();
+  renderHeroMosaic();
+  setupScrollReveal();
   await loadAndRender();
   const minDisplayMs = 500;
   const remaining = Math.max(0, minDisplayMs - (Date.now() - loaderStartedAt));
@@ -242,7 +293,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const navLinks = document.querySelector(".nav-links");
   if (navToggle && navLinks) {
     navToggle.addEventListener("click", () => {
-      navLinks.classList.toggle("nav-links--open");
+      const isOpen = navLinks.classList.toggle("nav-links--open");
+      navToggle.setAttribute("aria-expanded", String(isOpen));
     });
   }
 
