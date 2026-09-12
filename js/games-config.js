@@ -60,7 +60,7 @@ const GAMES = [
     ctaText: "Play now"
   },
   {
-    name: "My moo farm",
+    name: "My Moo Farm",
     description: "Grow crops and build your farm",
     image: "https://tr.rbxcdn.com/180DAY-1a40246f4af37b903c4c110e57766d9d/768/432/Image/Webp/noFilter",
     placeId: 134807373415131,
