@@ -995,6 +995,11 @@ section { position: relative; padding: 118px 0; }
 }
 .game-card:hover { border-color: var(--border-strong); transform: translateY(-7px); box-shadow: 0 28px 64px rgba(0, 0, 0, 0.28); }
 .game-card__image { position: relative; aspect-ratio: 16 / 9; overflow: hidden; transition: transform 0.6s cubic-bezier(.2,.8,.2,1); }
+.game-card__image--placeholder {
+  background:
+    radial-gradient(circle at 72% 30%, rgba(155, 234, 87, 0.18), transparent 35%),
+    linear-gradient(145deg, #122117, #080e0a);
+}
 .game-card:hover .game-card__image { transform: scale(1.025); }
 .game-card__image::after {
   position: absolute;

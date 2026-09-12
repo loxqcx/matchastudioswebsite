@@ -13,7 +13,7 @@ css/style.css        → All the styling
 js/games-config.js   → ⭐ EDIT THIS to add/remove/change your games
 js/main.js           → Fetches live stats and builds the game cards (no need to edit)
 api/stats.js         → Server-side function that talks to Roblox's API
-images/              → Put your game thumbnail images here
+images/              → Studio logo and other site assets
 ```
 
 ## Step 1: Customize your games (the only file you need to edit)
@@ -24,7 +24,6 @@ Open `js/games-config.js`. Each game looks like this:
 {
   name: "Traitor VS Sheriff DUELS",
   description: "A competitive duel experience...",
-  image: "images/game-placeholder-1.png",
   placeId: 119068914321553,
   link: "https://www.roblox.com/games/119068914321553/Traitor-VS-Sheriff-DUELS",
   ctaText: "Enter the Duel"
@@ -33,7 +32,7 @@ Open `js/games-config.js`. Each game looks like this:
 
 - **placeId**: the number in your game's Roblox URL. If your link is
   `roblox.com/games/119068914321553/My-Game`, the placeId is `119068914321553`.
-- **image**: drop a thumbnail (PNG/JPG) into the `images` folder and point to it here.
+- **thumbnails**: no configuration needed. On Vercel, the site fetches every published thumbnail directly from Roblox and advances to the next one whenever that visitor refreshes the page.
 - Copy/paste a whole `{ ... }` block to add a game, or delete one to remove it.
 
 Also rename "Matcha Studio" in `index.html`, `experiences.html`, and the
@@ -46,11 +45,14 @@ Roblox blocks websites from calling its API directly from the browser
 sketchy third-party proxy), `api/stats.js` runs **on the server** and:
 
 1. Turns each `placeId` into a `universeId` (Roblox's internal game ID)
-2. Asks Roblox for that universe's current player count (`playing`) and
-   `visits`
-3. Adds them all up and sends the totals + per-game numbers back to your page
+2. Asks Roblox for that universe's current player count (`playing`), `visits`,
+   and all published game thumbnails
+3. Adds the stats up and sends the totals, per-game numbers, and thumbnail sets
+   back to your page
 
-Your page then refreshes these numbers every 60 seconds automatically.
+Your page refreshes the numbers every 60 seconds automatically. Thumbnail
+rotation advances only on a full page refresh, so the moving hero animation
+does not jump or restart during a stats update.
 This only works once the site is deployed to Vercel (see below) — it won't
 fetch real numbers if you just double-click `index.html` on your computer,
 since there's no server to run `api/stats.js`.

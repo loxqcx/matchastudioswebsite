@@ -98,8 +98,29 @@ export default async function handler(req, res) {
     const gamesJson = await gamesRes.json();
     const gamesById = new Map((gamesJson.data || []).map((g) => [g.id, g]));
 
+    // Fetch every published thumbnail for each universe. Thumbnail failures
+    // are non-fatal so live stats still work if Roblox's image API is down.
+    const thumbnailsByUniverseId = new Map();
+    try {
+      const thumbnailsRes = await fetch(
+        `https://thumbnails.roblox.com/v1/games/multiget/thumbnails?universeIds=${validUniverseIds.join(",")}&countPerUniverse=10&defaults=true&size=768x432&format=Webp&isCircular=false`
+      );
+
+      if (thumbnailsRes.ok) {
+        const thumbnailsJson = await thumbnailsRes.json();
+        (thumbnailsJson.data || []).forEach((entry) => {
+          const urls = (entry.thumbnails || [])
+            .filter((thumbnail) => thumbnail.state === "Completed" && thumbnail.imageUrl)
+            .map((thumbnail) => thumbnail.imageUrl);
+          thumbnailsByUniverseId.set(String(entry.universeId), [...new Set(urls)]);
+        });
+      }
+    } catch (err) {
+      console.error("Roblox thumbnail request failed:", err);
+    }
+
     // Step 3: merge everything back together, keyed by placeId so
-    // the frontend can match stats to the right game card.
+    // the frontend can match stats and thumbnails to the right game card.
     const games = universeLookups.map(({ placeId, universeId }) => {
       const g = universeId ? gamesById.get(universeId) : null;
       return {
@@ -108,6 +129,9 @@ export default async function handler(req, res) {
         name: g ? g.name : null,
         playing: g ? g.playing : 0,
         visits: g ? g.visits : 0,
+        thumbnails: universeId
+          ? thumbnailsByUniverseId.get(String(universeId)) || []
+          : [],
       };
     });
 
