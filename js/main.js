@@ -183,7 +183,12 @@ function renderGameCards(statsByPlaceId, limit) {
   const grid = document.querySelector("[data-games-grid]");
   if (!grid) return;
 
-  const games = limit ? GAMES.slice(0, limit) : GAMES;
+  const gamesByCcu = GAMES.slice().sort((a, b) => {
+    const aPlaying = Number(statsByPlaceId.get(String(a.placeId))?.playing) || 0;
+    const bPlaying = Number(statsByPlaceId.get(String(b.placeId))?.playing) || 0;
+    return bPlaying - aPlaying;
+  });
+  const games = limit ? gamesByCcu.slice(0, limit) : gamesByCcu;
   grid.innerHTML = "";
 
   games.forEach((game, index) => {
@@ -196,7 +201,7 @@ function renderGameCards(statsByPlaceId, limit) {
     card.className = "game-card";
     card.innerHTML = `
       <div class="game-card__image${imageClass}"${imageStyle}>
-        <div class="game-card__image-overlay"><span>Live experience</span><span>${String(index + 1).padStart(2, "0")} ↗</span></div>
+        <div class="game-card__image-overlay"><span>${String(index + 1).padStart(2, "0")} ↗</span></div>
       </div>
       <div class="game-card__body">
         <h3>${game.name}</h3>

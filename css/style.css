@@ -911,7 +911,7 @@ body {
   filter: blur(12px);
   pointer-events: none;
 }
-.live-card__top { position: relative; font-family: "JetBrains Mono", monospace; font-size: 0.68rem; }
+.live-card__top { position: relative; justify-content: flex-end; font-family: "JetBrains Mono", monospace; font-size: 0.68rem; }
 .live-badge { padding: 6px 11px; font-size: 0.64rem; }
 .live-card__value { font-size: clamp(3.4rem, 6vw, 5.2rem); line-height: 1; letter-spacing: -0.07em; }
 .live-card__label { margin-top: 9px; }
@@ -1014,7 +1014,7 @@ section { position: relative; padding: 118px 0; }
   bottom: 14px;
   left: 17px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   color: rgba(255, 255, 255, 0.82);
   font-family: "JetBrains Mono", monospace;
   font-size: 0.62rem;
