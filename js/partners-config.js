@@ -13,19 +13,19 @@
 const PARTNERS = [
   {
     name: "ATL Interactive",
-    logo: "images/partners/atl-interactive.png"
+    logo: "images/partners/atl-interactive-clean.png"
   },
   {
     name: "OVTK",
-    logo: "images/partners/ovtk.png"
+    logo: "images/partners/ovtk-clean.png"
   },
   {
     name: "World Entertainment",
-    logo: "images/partners/world-entertainment.png"
+    logo: "images/partners/world-entertainment-clean.png"
   },
   {
     name: "Azul Studios",
-    logo: "images/partners/azul.png"
+    logo: "images/partners/azul-clean.png"
   }
 ];
 

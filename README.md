@@ -79,7 +79,6 @@ Open `js/games-config.js`. Each game looks like this:
 
 ```js
 {
-  name: "Traitor VS Sheriff DUELS",
   description: "A competitive duel experience...",
   placeId: 119068914321553,
   link: "https://www.roblox.com/games/119068914321553/Traitor-VS-Sheriff-DUELS",
@@ -89,6 +88,8 @@ Open `js/games-config.js`. Each game looks like this:
 
 - **placeId**: the number in your game's Roblox URL. If your link is
   `roblox.com/games/119068914321553/My-Game`, the placeId is `119068914321553`.
+- **name**: no configuration needed. The current game name is pulled from
+  Roblox automatically using the `placeId`.
 - **thumbnails**: no configuration needed. On Vercel, the site fetches every published thumbnail directly from Roblox and advances to the next one whenever that visitor refreshes the page.
 - Copy/paste a whole `{ ... }` block to add a game, or delete one to remove it.
 
@@ -102,8 +103,8 @@ Roblox blocks websites from calling its API directly from the browser
 sketchy third-party proxy), `api/stats.js` runs **on the server** and:
 
 1. Turns each `placeId` into a `universeId` (Roblox's internal game ID)
-2. Asks Roblox for that universe's current player count (`playing`), `visits`,
-   and all published game thumbnails
+2. Asks Roblox for that universe's current name, player count (`playing`),
+   `visits`, and all published game thumbnails
 3. Adds the stats up and sends the totals, per-game numbers, and thumbnail sets
    back to your page
 

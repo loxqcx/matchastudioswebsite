@@ -20,6 +20,27 @@ function formatNumber(num) {
   return String(num);
 }
 
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function fallbackGameName(game) {
+  try {
+    const slug = new URL(game.link).pathname.split("/").filter(Boolean).at(-1);
+    if (slug && !/^\d+$/.test(slug)) {
+      return decodeURIComponent(slug).replaceAll("-", " ");
+    }
+  } catch {
+    // The deployed site normally gets the official name from Roblox.
+  }
+  return "Roblox Experience";
+}
+
 let displayedValues = { players: 0, visits: 0, projects: 0, peak: 0 };
 
 function getGameImage(game) {
@@ -193,6 +214,7 @@ function renderGameCards(statsByPlaceId, limit) {
 
   games.forEach((game, index) => {
     const stats = statsByPlaceId.get(String(game.placeId)) || { playing: null, visits: null };
+    const displayName = stats.name || fallbackGameName(game);
     const image = getGameImage(game);
     const imageClass = image ? "" : " game-card__image--placeholder";
     const imageStyle = image ? ` style="background-image: url('${image}')"` : "";
@@ -204,7 +226,7 @@ function renderGameCards(statsByPlaceId, limit) {
         <div class="game-card__image-overlay"><span>${String(index + 1).padStart(2, "0")} ↗</span></div>
       </div>
       <div class="game-card__body">
-        <h3>${game.name}</h3>
+        <h3>${escapeHtml(displayName)}</h3>
         <p>${game.description}</p>
         <div class="game-card__stats">
           <div><span class="stat-value">${formatNumber(stats.playing)}</span><span class="stat-label">Active players</span></div>
