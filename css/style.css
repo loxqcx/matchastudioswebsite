@@ -1343,8 +1343,10 @@ a.partner-logo:hover {
 
 .team-card__avatar-wrap {
   position: relative;
-  aspect-ratio: 1 / 0.92;
+  display: grid;
+  height: 190px;
   overflow: hidden;
+  place-items: center;
   background:
     radial-gradient(circle at 65% 25%, rgba(155, 234, 87, 0.2), transparent 42%),
     #0d1911;
@@ -1352,15 +1354,23 @@ a.partner-logo:hover {
 
 .team-card__avatar-wrap::after {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(5, 10, 7, 0.6));
+  width: 142px;
+  height: 142px;
+  border: 1px solid rgba(155, 234, 87, 0.2);
+  border-radius: 50%;
   content: "";
 }
 
 .team-card__avatar {
-  width: 100%;
-  height: 100%;
+  position: relative;
+  z-index: 1;
+  width: 128px;
+  height: 128px;
+  border: 4px solid rgba(238, 247, 238, 0.1);
+  border-radius: 50%;
+  background: #101d14;
   object-fit: cover;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.38);
   transition: transform 600ms cubic-bezier(.2,.8,.2,1);
 }
 
@@ -1368,8 +1378,8 @@ a.partner-logo:hover {
 .team-card__status {
   position: absolute;
   z-index: 2;
-  right: 18px;
-  bottom: 18px;
+  bottom: 27px;
+  left: calc(50% + 42px);
   width: 13px;
   height: 13px;
   border: 3px solid #0a120d;

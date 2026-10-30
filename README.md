@@ -48,9 +48,15 @@ only required Discord value is their user ID:
 {
   discordId: "123456789012345678",
   role: "Developer",
+  rank: 1,
   fallbackName: "Team Member"
 }
 ```
+
+Team cards are automatically sorted by `rank` from the lowest number to the
+highest. For example, use `rank: 1` for the CEO, `rank: 2` for the next person,
+and continue with `3`, `4`, and so on. The rank controls order but is not shown
+on the public card.
 
 The two IDs already present were reused from the existing contact setup. Update
 their roles and add the rest of the team there. To copy an ID, enable Developer

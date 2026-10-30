@@ -57,6 +57,11 @@ function createTeamCard(member, profile) {
   return card;
 }
 
+function memberRank(member) {
+  const rank = Number(member.rank);
+  return Number.isFinite(rank) ? rank : Number.MAX_SAFE_INTEGER;
+}
+
 async function renderTeam() {
   const grid = document.querySelector("[data-team-grid]");
   const note = document.querySelector("[data-team-note]");
@@ -81,7 +86,12 @@ async function renderTeam() {
   }
 
   const fragment = document.createDocumentFragment();
-  TEAM_MEMBERS.forEach((member) => {
+  const membersByRank = TEAM_MEMBERS
+    .map((member, originalIndex) => ({ member, originalIndex }))
+    .sort((a, b) => memberRank(a.member) - memberRank(b.member) || a.originalIndex - b.originalIndex)
+    .map(({ member }) => member);
+
+  membersByRank.forEach((member) => {
     fragment.appendChild(
       createTeamCard(member, profilesById.get(String(member.discordId)))
     );
