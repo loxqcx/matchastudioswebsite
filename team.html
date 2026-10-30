@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Meet the Team — Matcha Studio</title>
+<meta name="description" content="Meet the people behind Matcha Studio." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="icon" type="image/png" href="images/logo.png" />
+</head>
+<body data-page="team">
+
+<div id="page-loader" class="page-loader">
+  <img src="images/logo.png" class="page-loader__logo" alt="Matcha Studio">
+  <div class="page-loader__spinner"></div>
+</div>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="/" class="brand">
+      <img src="images/logo.png" class="brand__mark" alt="Matcha Studio logo">
+      Matcha Studio
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/experiences">Our Games</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#careers">Careers</a></li>
+      <li><a href="/team" aria-current="page">Team</a></li>
+      <li><a href="https://discord.gg/TQrd3wcyf7" target="_blank" rel="noopener">Discord</a></li>
+      <li><a href="/#contact" class="btn btn--primary">Get in touch</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  </div>
+</nav>
+
+<header class="hero page-hero team-hero">
+  <div class="container">
+    <span class="eyebrow"><span class="pulse-dot"></span> Our people</span>
+    <h1>Meet the <span>team.</span></h1>
+    <p class="lead">The people building, operating, and growing Matcha Studio experiences.</p>
+  </div>
+</header>
+
+<main>
+  <section class="team-section">
+    <div class="container">
+      <div class="team-grid" data-team-grid></div>
+      <p class="team-note" data-team-note aria-live="polite"></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <a href="/" class="brand">
+      <img src="images/logo.png" class="brand__mark" alt="Matcha Studio logo">
+      Matcha Studio
+    </a>
+    <ul class="footer-links">
+      <li><a href="/experiences">Our Games</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#careers">Careers</a></li>
+      <li><a href="/team">Team</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+    <p class="footer-note">© 2026 Matcha Studio. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script type="module" src="js/team.js"></script>
+</body>
+</html>

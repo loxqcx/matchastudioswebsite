@@ -9,12 +9,63 @@ in by hand, they're fetched automatically.
 ```
 index.html          → Home page
 experiences.html     → Full "Our Games" page
+team.html            → Discord-powered "Meet the Team" page
 css/style.css        → All the styling
 js/games-config.js   → ⭐ EDIT THIS to add/remove/change your games
+js/partners-config.js → EDIT THIS to add/remove partners
+js/team-config.js    → EDIT THIS to add/remove team members
 js/main.js           → Fetches live stats and builds the game cards (no need to edit)
 api/stats.js         → Server-side function that talks to Roblox's API
+api/team.js          → Server-side function that talks to Discord's API
 images/              → Studio logo and other site assets
 ```
+
+## Partners section
+
+The homepage partner marquee stays hidden until at least one real partner is
+configured. Put each logo in `images/partners/`, then add it to
+`js/partners-config.js`:
+
+```js
+const PARTNERS = [
+  {
+    name: "Partner Name",
+    logo: "images/partners/partner-name.png",
+    url: "https://partner.example.com"
+  }
+];
+```
+
+Add more objects to the list and the page automatically includes them in the
+continuous logo loop. PNG, WebP, and SVG logo files all work.
+
+## Meet the Team setup
+
+Edit `js/team-config.js` whenever someone joins, leaves, or changes roles. The
+only required Discord value is their user ID:
+
+```js
+{
+  discordId: "123456789012345678",
+  role: "Developer",
+  fallbackName: "Team Member"
+}
+```
+
+The two IDs already present were reused from the existing contact setup. Update
+their roles and add the rest of the team there. To copy an ID, enable Developer
+Mode in Discord, right-click the person, and choose **Copy User ID**.
+
+The live username, display name, and avatar are loaded by `api/team.js`. Create
+a bot in the Discord Developer Portal, copy its bot token, then add this Vercel
+Environment Variable:
+
+- **Key:** `DISCORD_BOT_TOKEN`
+- **Value:** the bot token
+- **Environment:** Production, Preview, and Development
+
+Redeploy after saving the variable. Never paste the bot token into a JavaScript
+file or commit it to GitHub; it must stay in Vercel's server-side environment.
 
 ## Step 1: Customize your games (the only file you need to edit)
 
@@ -112,12 +163,11 @@ replacing, and commit — GitHub will ask to confirm you're replacing it.
 
 ## Clean URLs (no .html in the address bar)
 
-`vercel.json` in this project tells Vercel to serve `experiences.html` at
-`/experiences` and `index.html` at `/` — so links and the address bar never
-show `.html`. This only takes effect once deployed on Vercel (it won't do
-anything if you just open the files locally). Nothing else to configure —
-just make sure `vercel.json` is uploaded to the repo root alongside
-`index.html`.
+`vercel.json` in this project gives every HTML page a clean URL, including
+`/experiences`, `/team`, and `/`. This only takes effect once deployed on
+Vercel (it won't do anything if you just open the files locally). Nothing else
+to configure — just make sure `vercel.json` is uploaded to the repo root
+alongside `index.html`.
 
 ## Alternative: Netlify (also free)
 

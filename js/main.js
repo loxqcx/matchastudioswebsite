@@ -346,23 +346,146 @@ function setupScrollReveal() {
   items.forEach((item) => observer.observe(item));
 }
 
+function renderPartners() {
+  const section = document.querySelector("[data-partners-section]");
+  const track = document.querySelector("[data-partners-track]");
+  const partners = typeof PARTNERS === "undefined" ? [] : PARTNERS;
+  if (!section || !track || !Array.isArray(partners) || !partners.length) return;
+
+  const createGroup = (hiddenCopy = false) => {
+    const group = document.createElement("div");
+    group.className = "partners-marquee__group";
+    if (hiddenCopy) group.setAttribute("aria-hidden", "true");
+
+    partners.forEach((partner) => {
+      if (!partner?.name || !partner?.logo) return;
+      const item = document.createElement(partner.url ? "a" : "span");
+      item.className = "partner-logo";
+      if (partner.url) {
+        item.href = partner.url;
+        item.target = "_blank";
+        item.rel = "noopener";
+        item.setAttribute("aria-label", partner.name);
+      }
+
+      const image = document.createElement("img");
+      image.src = partner.logo;
+      image.alt = hiddenCopy ? "" : partner.name;
+      image.loading = "lazy";
+      item.appendChild(image);
+      group.appendChild(item);
+    });
+    return group;
+  };
+
+  const firstGroup = createGroup();
+  if (!firstGroup.children.length) return;
+  track.replaceChildren(firstGroup, createGroup(true));
+  section.hidden = false;
+}
+
+function setupLeafFall() {
+  if (document.body.dataset.page !== "home") return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const layer = document.createElement("div");
+  layer.className = "leaf-fall";
+  layer.setAttribute("aria-hidden", "true");
+
+  for (let index = 0; index < 24; index += 1) {
+    const leaf = document.createElement("span");
+    const drift = -80 + Math.random() * 160;
+    const spin = 300 + Math.random() * 560;
+    leaf.className = "falling-leaf";
+    leaf.style.setProperty("--leaf-left", `${Math.random() * 100}%`);
+    leaf.style.setProperty("--leaf-delay", `${Math.random() * 3.4}s`);
+    leaf.style.setProperty("--leaf-duration", `${6.5 + Math.random() * 4.5}s`);
+    leaf.style.setProperty("--leaf-size", `${10 + Math.random() * 15}px`);
+    leaf.style.setProperty("--leaf-drift", `${drift}px`);
+    leaf.style.setProperty("--leaf-drift-reverse", `${drift * -0.3}px`);
+    leaf.style.setProperty("--leaf-drift-end", `${drift * 0.45}px`);
+    leaf.style.setProperty("--leaf-spin", `${spin}deg`);
+    leaf.style.setProperty("--leaf-spin-mid", `${spin * 0.38}deg`);
+    leaf.style.setProperty("--leaf-spin-late", `${spin * 0.72}deg`);
+    leaf.style.setProperty("--leaf-opacity", `${0.45 + Math.random() * 0.45}`);
+    layer.appendChild(leaf);
+  }
+
+  document.body.appendChild(layer);
+  window.setTimeout(() => layer.remove(), 12500);
+}
+
+function setupCustomCursor() {
+  if (!window.matchMedia("(pointer: fine)").matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const dot = document.createElement("span");
+  const ring = document.createElement("span");
+  dot.className = "cursor-dot";
+  ring.className = "cursor-ring";
+  dot.setAttribute("aria-hidden", "true");
+  ring.setAttribute("aria-hidden", "true");
+  document.body.append(dot, ring);
+  document.body.classList.add("custom-cursor-enabled");
+
+  let targetX = window.innerWidth / 2;
+  let targetY = window.innerHeight / 2;
+  let ringX = targetX;
+  let ringY = targetY;
+
+  document.addEventListener("pointermove", (event) => {
+    targetX = event.clientX;
+    targetY = event.clientY;
+    dot.style.transform = `translate3d(${targetX}px, ${targetY}px, 0) translate(-50%, -50%)`;
+    dot.classList.add("cursor--visible");
+    ring.classList.add("cursor--visible");
+  });
+
+  document.addEventListener("pointerover", (event) => {
+    const interactive = event.target.closest("a, button, input, textarea, select, [role='button']");
+    ring.classList.toggle("cursor--active", Boolean(interactive));
+  });
+
+  document.documentElement.addEventListener("mouseleave", () => {
+    dot.classList.remove("cursor--visible");
+    ring.classList.remove("cursor--visible");
+  });
+
+  function animateRing() {
+    ringX += (targetX - ringX) * 0.16;
+    ringY += (targetY - ringY) * 0.16;
+    ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+    requestAnimationFrame(animateRing);
+  }
+  requestAnimationFrame(animateRing);
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   const loaderStartedAt = Date.now();
+  const needsGameData = Boolean(
+    document.querySelector("[data-games-grid], [data-stat], [data-hero-mosaic]")
+  );
+
+  setupCustomCursor();
+  setupLeafFall();
+  renderPartners();
   setupScrollReveal();
-  await loadAndRender();
+  if (needsGameData) await loadAndRender();
   const minDisplayMs = 500;
   const remaining = Math.max(0, minDisplayMs - (Date.now() - loaderStartedAt));
   setTimeout(hidePageLoader, remaining);
 
   // Ticks once a second: counts down to the next refresh and keeps
   // "Updated Ns ago" accurate in between fetches.
-  setInterval(() => {
-    secondsUntilRefresh = Math.max(0, secondsUntilRefresh - 1);
-    updateFooterText();
-    if (secondsUntilRefresh === 0) {
-      loadAndRender();
-    }
-  }, 1000);
+  if (needsGameData) {
+    setInterval(() => {
+      secondsUntilRefresh = Math.max(0, secondsUntilRefresh - 1);
+      updateFooterText();
+      if (secondsUntilRefresh === 0) {
+        loadAndRender();
+      }
+    }, 1000);
+  }
 
   // Mobile nav toggle
   const navToggle = document.querySelector(".nav-toggle");

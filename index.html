@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="css/style.css" />
 <link rel="icon" type="image/png" href="images/logo.png" />
 </head>
-<body>
+<body data-page="home">
 
 <div id="page-loader" class="page-loader">
   <img src="images/logo.png" class="page-loader__logo" alt="Matcha Studio">
@@ -29,6 +29,7 @@
       <li><a href="/experiences">Our Games</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#careers">Careers</a></li>
+      <li><a href="/team">Team</a></li>
       <li><a href="https://discord.gg/TQrd3wcyf7" target="_blank" rel="noopener">Discord</a></li>
       <li><a href="#contact" class="btn btn--primary">Get in touch</a></li>
     </ul>
@@ -149,6 +150,18 @@
   </div>
 </section>
 
+<section id="partners" class="partners-section" data-partners-section hidden>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Partners</span>
+      <h2>Building alongside great teams.</h2>
+    </div>
+  </div>
+  <div class="partners-marquee" aria-label="Our partners">
+    <div class="partners-marquee__track" data-partners-track></div>
+  </div>
+</section>
+
 <section id="careers">
   <div class="container careers-grid">
     <div class="careers-copy">
@@ -229,6 +242,7 @@
       <li><a href="/experiences">Our Games</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#careers">Careers</a></li>
+      <li><a href="/team">Team</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <p class="footer-note">© 2026 Matcha Studio. All rights reserved.</p>
@@ -236,6 +250,7 @@
 </footer>
 
 <script src="js/games-config.js"></script>
+<script src="js/partners-config.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
