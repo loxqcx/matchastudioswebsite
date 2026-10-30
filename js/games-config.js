@@ -38,12 +38,6 @@ const GAMES = [
     ctaText: "Play now"
   },
   {
-    description: "Grow crops and build your farm",
-    placeId: 134807373415131,
-    link: "https://www.roblox.com/games/134807373415131/My-Moo-Farm",
-    ctaText: "Play now"
-  },
-  {
     description: "ROLL YOUR MAGNET, COLLECT SCRAPS & GET STRONGER!",
     placeId: 131336586926984,
     link: "https://www.roblox.com/games/131336586926984/Roll-a-GIANT-Scrap-Ball#!/game-instances",
